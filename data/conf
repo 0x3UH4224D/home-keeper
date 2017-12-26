@@ -1,0 +1,25 @@
+# Configuration file for home-keeper.
+# There are two way to configur home-keeper, the first way (recommanded) by
+# runing `home-keeper-conf` with root privilege. The second way is by editing
+# this file using any text editor.
+
+
+[Backup]
+# this path refer to the place that users data will be saved in
+backup-path = /usr/share/home-keeper/users-data/
+# this option tells home-keeper to remove old backups in the `backup-path`
+# if they are exists
+remove-old-files = true;
+
+# this group for Rsync flags
+[Rsync Flags]
+# -c --checksum
+checksum = false;
+# -z --compress
+compress = true;
+
+[Users]
+# A list of usernames that home-keeper will restore thier files on each boot.
+# Note usernames are sprated by simecolen `;` and the end of list end witj simecolen too
+# for examle foo;boo;zoo;
+usernames = test1;

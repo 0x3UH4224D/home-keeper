@@ -1,0 +1,6 @@
+* This tool is not stable yet, but it can be used.
+** if you find a bug open an issue for, I'll be very hapy to fix it.
+** if you would like to add feature, frok my repo and do what ever you want then create a pull request for your changes.
+
+* License GPL3+
+  This porject is licensed under GPL3 or any later version (at your option.)
