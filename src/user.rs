@@ -54,10 +54,6 @@ impl User {
             })
     }
 
-    fn user_exists<T: AsRef<str>>(username: T) -> bool {
-        unimplemented!();
-    }
-
     pub fn new(username: String) -> Result<User, Error> {
         // combaine user_home_dir() with user name so we got the home directory for this user
         let user_home_dir = User::home_dir_for(username.as_str())?;
@@ -68,8 +64,6 @@ impl User {
         })
     }
 
-    // rsync --checksum --archive --compress --delete --perms [source] [dest]
-    // todo: use rsync insted of cp
     pub fn backup_to<P: AsRef<Path>>(
         &self,
         path: P,
@@ -91,7 +85,6 @@ impl User {
             }
         }
 
-        // run rsync
         let output = Command::new("rsync")
             .args(args)
             .arg(self.home_dir.as_ref() as &OsStr)
@@ -125,7 +118,6 @@ impl User {
             return Err(Error::NoBackupFilesFound(user_backup_files));
         }
 
-        // run rsync
         let output = Command::new("rsync")
             .args(args)
             .arg(user_backup_files)
@@ -138,4 +130,20 @@ impl User {
             Err(Error::RsyncError(String::from_utf8_lossy(&output.stderr).to_string()))
         }
     }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn home_dir_for_root() {
+        assert_eq!(
+            PathBuf::from("/root"),
+            User::home_dir_for("root").expect("root home-directory is not Ok()")
+        );
+    }
+
+    #[test]
+    
 }
