@@ -12,7 +12,9 @@
 
 ** Dependencies
    Gtk-rs - gio
+
    Gtk-rs - glib
+
    rsync
 
 ** Contribute
