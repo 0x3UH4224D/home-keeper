@@ -23,7 +23,6 @@ use std::fs;
 use std::io::Read;
 use std::process::Command;
 use std::ffi::OsStr;
-use std::ffi::OsString;
 
 use super::error::Error;
 
@@ -77,11 +76,14 @@ impl User {
         }
 
         let dest_path = path.as_ref().join(&self.name);
-        if dest_path.exists() {
-            if dest_path.is_dir() {
-                fs::remove_dir_all(dest_path.clone())?;
-            } else {
-                fs::remove_file(dest_path.clone())?;
+        // remove backup directory if exists option
+        if remove_old_files {
+            if dest_path.exists() {
+                if dest_path.is_dir() {
+                    fs::remove_dir_all(dest_path.clone())?;
+                } else {
+                    fs::remove_file(dest_path.clone())?;
+                }
             }
         }
 
@@ -143,7 +145,4 @@ mod tests {
             User::home_dir_for("root").expect("root home-directory is not Ok()")
         );
     }
-
-    #[test]
-    
 }

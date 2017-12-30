@@ -20,10 +20,7 @@
 extern crate gio;
 extern crate glib;
 
-use std::process::Command;
-use std::path::Path;
-use std::ffi::OsStr;
-use std::error::Error;
+use gio::ApplicationExt;
 
 pub mod app;
 pub mod user;
@@ -32,12 +29,22 @@ pub mod error;
 use app::Application;
 
 fn main() {
-    Application::new()
-        .and_then(|app| {
-            app.run()
-        })
-        .or_else(|err| {
-            println!("home-keeper exit with error message: {}", err);
-            Err(err)
-        });
+    let gio_app = gio::Application::new(
+        "org.muhannad.HomeKeeper",
+        gio::ApplicationFlags::IS_SERVICE
+    );
+
+    // using GApplication to run app::Application::run()
+    gio_app.connect_activate(|gio_app| {
+        let _ = Application::new(gio_app.clone())
+            .and_then(|ok_app| {
+                ok_app.run()
+            })
+            .or_else(|err| {
+                println!("home-keeper exit with error message: {}", err);
+                Err(err)
+            });
+    });
+
+    // gio_app.conn
 }

@@ -22,20 +22,19 @@ use std::fs;
 use std::error::Error;
 
 use gio;
-use gio::prelude::*;
 use glib;
 
 use super::error::Error as HKError;
 use super::user::User;
 
 pub struct Application {
-    parent: gio::Application,
+    _parent: gio::Application,
     conf: glib::KeyFile,
     users: Vec<User>,
 }
 
 impl Application {
-    pub fn new() -> Result<Application, HKError> {
+    pub fn new(gio_app: gio::Application) -> Result<Application, HKError> {
         let conf_dir = Path::new("/etc/home-keeper/");
         let conf_file = Path::new("/etc/home-keeper/conf");
 
@@ -69,13 +68,8 @@ impl Application {
             users.push(User::new(username)?);
         }
 
-        let gio_app = gio::Application::new(
-            "org.muhannad.HomeKeeper",
-            gio::ApplicationFlags::IS_SERVICE
-        );
-
         Ok(Self {
-            parent: gio_app,
+            _parent: gio_app,
             conf: conf,
             users: users,
         })
@@ -109,7 +103,7 @@ impl Application {
 
             match user.restore_from(backup_path.clone(), checksum, compress) {
                 Ok(()) => {},
-                Err(HKError::NoBackupFilesFound(ref path)) => {
+                Err(HKError::NoBackupFilesFound(ref _path)) => {
                     let remove_old_files = self.conf.get_string("Backup", "remove-old-files")
                         .and_then(|flag| {
                             if flag == "true;" {
