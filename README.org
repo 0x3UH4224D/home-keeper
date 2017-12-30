@@ -11,11 +11,9 @@
   * add service file so this tool can be run by systemctl
 
 ** Dependencies
-   Gtk-rs - gio
-
-   Gtk-rs - glib
-
-   rsync
+   * Gtk-rs - gio
+   * Gtk-rs - glib
+   * rsync
 
 ** Contribute
    * if you find a bug open an issue for, I'll be very hapy to fix it.
