@@ -20,6 +20,6 @@ compress = true;
 
 [Users]
 # A list of usernames that home-keeper will restore thier files on each boot.
-# Note usernames are sprated by simecolen `;` and the end of list end witj simecolen too
+# Note usernames are sprated by simecolen `;` and the end of list end with simecolen too
 # for examle foo;boo;zoo;
 usernames = test1;
