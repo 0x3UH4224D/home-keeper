@@ -8,9 +8,11 @@
    TODO
 
 ** ToDo
+   * add command-line arguments handler
    * splite functions into smaller one for easy bug detection
    * add units test(not finished yet)
-   * add service file so this tool can be run by systemctl
+   * +logging support+
+   * +add service file so this tool can be run by systemctl+
     
 ** Dependencies from Cargo
    * Gtk-rs - gio
