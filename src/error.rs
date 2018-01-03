@@ -17,11 +17,12 @@
 // You should have received a copy of the GNU General Public License
 // along with home_keeper. If not, see <http://www.gnu.org/licenses/>.
 
-use std::error;
+use std::error::{self, Error as StdError};
 use std::convert::From;
 use std::io;
 use std::fmt;
 use std::path::PathBuf;
+use slog::Logger;
 
 use glib;
 
@@ -43,6 +44,39 @@ pub enum Error {
     EmptyUsernames,
     // backup files don't exists
     NoBackupFilesFound(PathBuf),
+}
+
+impl Error {
+    pub fn log(&self, logger: &Logger) {
+        match *self {
+            Error::Io(ref io_error) => {
+                error!(
+                    logger,
+                    "IO Error occured";
+                    "message" => io_error.description()
+                );
+            },
+            Error::GLibError(ref glib_error) => {
+                error!(
+                    logger,
+                    "GLib Error occured";
+                    "message" => glib_error.description()
+                );
+            },
+            Error::NoUserFound(ref username) =>
+                error!(logger, "User not found"; "username" => username),
+            Error::NotDirectory(ref path) =>
+                error!(logger, "Directory not found"; "path" => path.to_string_lossy().as_ref()),
+            Error::RsyncError(ref error_msg) =>
+                error!(logger, "Rsync Error"; "message" => error_msg),
+            Error::NoConfFileFound(ref path) =>
+                error!(logger, "Configuration not found"; "path" => path.to_string_lossy().as_ref()),
+            Error::EmptyUsernames =>
+                error!(logger, "Configuration not configed"; "username" => "empty"),
+            Error::NoBackupFilesFound(ref path) =>
+                error!(logger, "Backup files not found"; "path" => path.to_string_lossy().as_ref()),
+        }
+    }
 }
 
 impl fmt::Display for Error {

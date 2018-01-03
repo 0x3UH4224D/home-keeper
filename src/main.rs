@@ -20,13 +20,19 @@
 extern crate gio;
 extern crate glib;
 
-use gio::ApplicationExt;
+#[macro_use]
+extern crate slog;
+extern crate slog_term;
 
 pub mod app;
 pub mod user;
 pub mod error;
+pub mod log;
 
 use app::Application;
+use gio::ApplicationExt;
+use gio::prelude::ApplicationExtManual;
+use std::env;
 
 fn main() {
     let gio_app = gio::Application::new(
@@ -35,16 +41,27 @@ fn main() {
     );
 
     // using GApplication to run app::Application::run()
-    gio_app.connect_activate(|gio_app| {
-        let _ = Application::new(gio_app.clone())
+    gio_app.connect_activate(move |gio_app| {
+        let prgname = "home-keeper";
+        let app_name = "Home keeper";
+        glib::set_application_name(app_name);
+        glib::set_prgname(Some(prgname));
+
+        // create logger
+        let logger = log::build_logger(prgname, "/var/log/")
+            .expect("Couldn't open log file in /var/log/");
+
+        let _ = Application::new(gio_app.clone(), logger.clone())
             .and_then(|ok_app| {
                 ok_app.run()
             })
             .or_else(|err| {
-                println!("home-keeper exit with error message: {}", err);
+                err.log(&logger);
                 Err(err)
             });
     });
 
-    // gio_app.conn
+    // run our GApplication
+    let args: Vec<String> = env::args().collect();
+    gio_app.run(&args);
 }

@@ -4,6 +4,11 @@ version = "0.1.0"
 authors = ["Muhannad Alrusayni <0x3UH4224D@gmail.com>"]
 license = "GPL3+"
 
+[dependencies]
+log = "0.4.1"
+slog = "2.1.1"
+slog-term = "2.3.0"
+
 [dependencies.gio]
 git = "https://github.com/gtk-rs/gio"
 
