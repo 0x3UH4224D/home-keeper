@@ -37,7 +37,7 @@ use std::env;
 fn main() {
     let gio_app = gio::Application::new(
         "org.muhannad.HomeKeeper",
-        gio::ApplicationFlags::IS_SERVICE
+        gio::ApplicationFlags::FLAGS_NONE
     );
 
     // using GApplication to run app::Application::run()

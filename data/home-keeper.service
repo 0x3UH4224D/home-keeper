@@ -1,0 +1,9 @@
+# Systemd unit file for home-keeper
+
+[Unit]
+Description=Home Freeze Like Agent
+Before=graphical.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/home-keeper
