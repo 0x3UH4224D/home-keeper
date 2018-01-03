@@ -4,12 +4,14 @@
 ** Usage
    TODO
 
-** ToDo
-  * logging support
-  * splite functions into smaller one for easy bug detection
-  * add units test
-  * add service file so this tool can be run by systemctl
+** Features
+   TODO
 
+** ToDo
+   * splite functions into smaller one for easy bug detection
+   * add units test(not finished yet)
+   * add service file so this tool can be run by systemctl
+    
 ** Dependencies
    * Gtk-rs - gio
    * Gtk-rs - glib
