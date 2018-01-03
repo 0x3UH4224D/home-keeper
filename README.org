@@ -12,9 +12,13 @@
    * add units test(not finished yet)
    * add service file so this tool can be run by systemctl
     
-** Dependencies
+** Dependencies from Cargo
    * Gtk-rs - gio
    * Gtk-rs - glib
+   * slog
+   * slog-term
+
+** Dependencies need to be installed
    * rsync
 
 ** Contribute
@@ -22,4 +26,4 @@
    * if you would like to add feature, frok my repo and do what ever you want then create a pull request for your changes.
 
 ** License GPL3+
-   This porject is licensed under GPL3 or any later version (at your option.)
+   This porject is licensed under GPL3 or any later version (at your option).
